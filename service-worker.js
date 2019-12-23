@@ -2,11 +2,11 @@
   'use strict';
   const id = '1f564ab3894ede3a46f93d',
     files = [
-      '/',
-      '/assets/cricket.png',
-      '/assets/scripts.js',
-      '/assets/styles.css',
-      '/index.html'
+      '/car-cricket',
+      'assets/cricket.png',
+      'assets/scripts.js',
+      'assets/styles.css',
+      'index.html'
     ],
     cached = new Set(files);
 

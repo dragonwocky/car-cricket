@@ -4,10 +4,10 @@
   "name": "Car Cricket",
   "short_name": "Car Cricket",
   "display": "standalone",
-  "start_url": "/",
+  "start_url": "/car-cricket",
   "icons": [
     {
-      "src": "/assets/cricket.png",
+      "src": "assets/cricket.png",
       "sizes": "250x250",
       "type": "image/png"
     }
