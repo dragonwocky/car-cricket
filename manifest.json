@@ -1,0 +1,15 @@
+{
+  "background_color": "#ffffff",
+  "theme_color": "#b20000",
+  "name": "Car Cricket",
+  "short_name": "Car Cricket",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/assets/cricket.png",
+      "sizes": "250x250",
+      "type": "image/png"
+    }
+  ]
+}

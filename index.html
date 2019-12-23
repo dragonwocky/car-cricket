@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<!--
+  Car Cricket - It's cricket! Well, kinda. You play it in a car.
+  ===============================================================
+  Copyright (c) 2019 dragonwocky <thedragonring.bod@gmail.com>, under the ISC License.
+-->
+
+<html>
+  <head>
+    <title>Car Cricket</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script src="assets/scripts.js"></script>
+    <link rel="shortcut icon" href="assets/cricket.png" type="image/png" />
+    <!-- Homescreen Stuff -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="assets/cricket.png" />
+    <!-- Preview Card -->
+    <meta name="author" content="dragonwocky" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Car Cricket" />
+    <meta
+      property="og:description"
+      content="This is an example preview card. What more do you want?"
+    />
+    <meta property="og:image" content="assets/cricket.png" />
+    <meta name="theme-color" content="#B20000" />
+    <meta name="twitter:site" content="@TheDragonRing" />
+    <meta name="twitter:creator" content="@TheDragonRing" />
+  </head>
+  <body onload="load()">
+    <div class="sidebar">
+      <h1>Car Cricket</h1>
+      <p>It's cricket! Well, kinda. You play it in a car.</p>
+      <hr />
+      <div>
+        <label class="switch">
+          <input
+            type="radio"
+            name="settings"
+            value="free"
+            onclick="set('free')"
+          />
+          <span class="slider"></span>
+        </label>
+        <br class="mobile-only" />
+        <label>Freeplay</label>
+        <br />
+        <label class="switch">
+          <input
+            type="radio"
+            name="settings"
+            value="test"
+            onclick="set('test')"
+          />
+          <span class="slider"></span>
+        </label>
+        <br class="mobile-only" />
+        <label>Test match - 10 wickets</label>
+        <br />
+        <label class="switch">
+          <input
+            type="radio"
+            name="settings"
+            value="t20"
+            onclick="set('t20')"
+          />
+          <span class="slider"></span>
+        </label>
+        <br class="mobile-only" />
+        <label>T20 match - 20 balls/cars <i>or</i> 10 wickets</label>
+        <br />
+        <label class="switch">
+          <input
+            type="radio"
+            name="settings"
+            value="day"
+            onclick="set('day')"
+          />
+          <span class="slider"></span>
+        </label>
+        <br class="mobile-only" />
+        <label>One-day match - 30 minutes <i>or</i> 10 wickets</label>
+      </div>
+      <hr />
+      <button class="other" onclick="history()">HISTORY</button>
+    </div>
+
+    <div class="game">
+      <div class="choose">
+        <p>Choose a team name:</p>
+        <input onkeydown="if(event.keyCode === 13) choose(this.value)" />
+        <button onclick="choose(document.querySelector('.choose input').value)">
+          START INNINGS
+        </button>
+      </div>
+      <div class="play">
+        <div class="buttons">
+          <button class="white" onclick="score(1)">ONE</button>
+          <button class="grey" onclick="score(2)">TWO</button>
+          <button class="blue" onclick="score(3)">THREE</button>
+          <button class="black" onclick="score(4)">FOUR</button>
+          <button class="pink" onclick="score(5)">FIVE</button>
+          <button class="yellow" onclick="score(6)">SIX</button>
+          <button class="red" onclick="score(0, true)">WICKET</button>
+        </div>
+        <div class="info">
+          <p>
+            Team:
+            <span class="team"></span>
+          </p>
+          <p>
+            Score: <span class="runs"></span> for
+            <span class="wickets"></span>
+          </p>
+        </div>
+        <button class="end" onclick="end()">END INNINGS</button>
+      </div>
+    </div>
+
+    <div class="popup modal">
+      <span class="background" onclick="popup(0, 0, false)"></span>
+      <div class="content">
+        <span class="close" onclick="popup(0, 0, false)"></span>
+        <br />
+        <br />
+        <div class="centered">
+          <div class="text"></div>
+          <br />
+          <div class="buttons"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      if ('serviceWorker' in navigator)
+        navigator.serviceWorker.register('service-worker.js');
+    </script>
+  </body>
+</html>
