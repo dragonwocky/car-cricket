@@ -3,7 +3,7 @@
   "theme_color": "#b20000",
   "name": "Car Cricket",
   "short_name": "Car Cricket",
-  "display": "standalone",
+  "display": "fullscreen",
   "start_url": "/car-cricket/",
   "icons": [
     {
