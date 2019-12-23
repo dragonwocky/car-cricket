@@ -31,12 +31,12 @@ Runs are based off the colour of cars you drive past. It's up to you to decide w
 
 Innings are stored in history in the format `<inning-number>. <team> scored <runs> for <wickets> in a <balls> <gamemode>`. History is persisted via localStorage and can be cleared at the click of a button.
 
-## Progressive Web App / Offline App
+## Offline App
 
-| platform            | test status                         |
-| ------------------- | ----------------------------------- |
-| Chrome (Windows 10) | working                             |
-| Safari (iOS 13)     | repeatedly failing (reason unknown) |
+| platform            | test status              |
+| ------------------- | ------------------------ |
+| Chrome (Windows 10) | working - PWA            |
+| Safari (iOS 13)     | working - cache.manifest |
 
 _if something is not on this list, it has not been tested. contributions to this list are welcome._
 
