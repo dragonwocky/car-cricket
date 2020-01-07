@@ -1,144 +1,119 @@
 <!DOCTYPE html>
-
-<!--
-  Car Cricket - It's cricket! Well, kinda. You play it in a car.
-  ===============================================================
-  Copyright (c) 2019 dragonwocky <thedragonring.bod@gmail.com>, under the ISC License.
--->
-
-<html manifest="cache.manifest">
+<html lang="en">
   <head>
-    <title>Car Cricket</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Cricket</title>
+
     <link rel="stylesheet" href="assets/styles.css" />
     <script src="assets/scripts.js"></script>
-    <link rel="shortcut icon" href="assets/cricket.png" type="image/png" />
-    <!-- Homescreen Stuff -->
-    <link rel="manifest" href="manifest.json" />
-    <link rel="apple-touch-icon" href="assets/cricket.png" />
-    <!-- Preview Card -->
-    <meta name="author" content="dragonwocky" />
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Car Cricket" />
-    <meta
-      property="og:description"
-      content="This is an example preview card. What more do you want?"
-    />
-    <meta property="og:image" content="assets/cricket.png" />
-    <meta name="theme-color" content="#B20000" />
-    <meta name="twitter:site" content="@TheDragonRing" />
-    <meta name="twitter:creator" content="@TheDragonRing" />
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="assets/web-icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-icon.png" />
   </head>
-  <body onload="load()">
-    <div class="sidebar">
-      <h1>Car Cricket</h1>
-      <p>It's cricket! Well, kinda. You play it in a car.</p>
-      <hr />
+  <body>
+    <section id="menu">
+      <!--
+        title
+        
+        team name
+        game mode
+        (warnings)
+
+        start
+        history
+      -->
+      <div class="title">
+        <h1>car cricket</h1>
+      </div>
+      <div class="name">
+        <label for="teamname">team name:</label>
+        <input
+          name="name"
+          id="teamname"
+          placeholder="team name"
+          type="text"
+          onkeyup="if(event.key === 13) start()"
+        />
+        <p class="warning">A team name is required.</p>
+      </div>
+      <div class="mode">
+        <label for="gamemode">select match:</label>
+        <select id="gamemode">
+          <option value="freeplay">Free Play</option>
+          <option value="test">Test Match</option>
+          <option value="t20">T20</option>
+          <option value="day">One Day International</option>
+        </select>
+        <!--
+          (Free play) Wickets are runs are unlimited. You can keep playing until you press "End Innings."
+          (Test Match) The innings ends when ten wickets have fallen, or you can "declare" by pressing "End Innings."
+          (T20) The innings ends when either: ten wickets have fallen, or 20 cars have passed.
+          {One Day International} The innings ends when either: ten wickets have fallen, or 50 cars have passed.
+        -->
+        <p id="conditions"></p>
+      </div>
+      <div class="actions">
+        <button class="start" onclick="start()">start innings</button>
+        <!-- on menu page, history displays automatically,; doesn't need a button.
+          <button onclick="history()">history</button>
+        -->
+      </div>
       <div>
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="free"
-            onclick="set('free')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>Freeplay</label>
-        <br />
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="test"
-            onclick="set('test')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>Test match - 10 wickets</label>
-        <br />
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="t20"
-            onclick="set('t20')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>T20 match - 20 balls/cars <i>or</i> 10 wickets</label>
-        <br />
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="day"
-            onclick="set('day')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>One-day match - 30 minutes <i>or</i> 10 wickets</label>
+        <h2>History:</h2>
       </div>
-      <hr />
-      <button class="other" onclick="history()">HISTORY</button>
-    </div>
+    </section>
 
-    <div class="game">
-      <div class="choose">
-        <p>Choose a team name:</p>
-        <input onkeydown="if(event.keyCode === 13) choose(this.value)" />
-        <button onclick="choose(document.querySelector('.choose input').value)">
-          START INNINGS
-        </button>
-      </div>
-      <div class="play">
-        <div class="buttons">
-          <button class="white" onclick="score(1)">ONE</button>
-          <button class="grey" onclick="score(2)">TWO</button>
-          <button class="blue" onclick="score(3)">THREE</button>
-          <button class="black" onclick="score(4)">FOUR</button>
-          <button class="pink" onclick="score(5)">FIVE</button>
-          <button class="yellow" onclick="score(6)">SIX</button>
-          <button class="red" onclick="score(0, true)">WICKET</button>
-        </div>
-        <div class="info">
-          <p>
-            Team:
-            <span class="team"></span>
-          </p>
-          <p>
-            Score: <span class="runs"></span> for
-            <span class="wickets"></span>
-          </p>
-        </div>
-        <button class="end" onclick="end()">END INNINGS</button>
-      </div>
-    </div>
+    <section id="game">
+      <!--
+        scoring buttons
 
-    <div class="popup modal">
-      <span class="background" onclick="popup(0, 0, false)"></span>
+        end
+        history
+      -->
+      <div class="buttons">
+        <button class="white" onclick="score(1)">one</button>
+        <button class="grey" onclick="score(2)">two</button>
+        <button class="blue" onclick="score(3)">three</button>
+        <button class="black" onclick="score(4)">four</button>
+        <button class="pink" onclick="score(5)">five</button>
+        <button class="yellow" onclick="score(6)">six</button>
+        <button class="red" onclick="score(0, true)">wicket</button>
+      </div>
+
+      <div class="details">
+        <p>
+          team:
+          <span id="name"></span>
+        </p>
+        <p>
+          score: <span id="runs"></span> for
+          <span id="wickets"></span>
+        </p>
+      </div>
+
+      <div class="actions">
+        <button onclick="end()">end innings</button>
+        <button onclick="history('open')">history</button>
+      </div>
+    </section>
+
+    <section id="history">
+      <span class="background" onclick="history('close')"></span>
       <div class="content">
-        <span class="close" onclick="popup(0, 0, false)"></span>
+        <span class="close" onclick="history('close')"></span>
         <br />
         <br />
-        <div class="centered">
-          <div class="text"></div>
-          <br />
-          <div class="buttons"></div>
+        <div class="content">
+          <!--
+            list <inning-number>. <team> scored <runs> for <wickets> in a <balls> <gamemode>
+
+            clear
+          -->
+          <button onclick="history('clear')">history</button>
         </div>
       </div>
-    </div>
-
-    <script>
-      if ('serviceWorker' in navigator)
-        navigator.serviceWorker.register('service-worker.js', {
-          scope: '/car-cricket/'
-        });
-    </script>
+    </section>
   </body>
 </html>

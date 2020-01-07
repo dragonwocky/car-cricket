@@ -1,10 +1,13 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"liveServer.settings.port": 5501
-	}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "C:\\Users\\vinetom\\OneDrive - Donvale Christian College\\coding\\js\\car-cricket (2018)"
+    }
+  ],
+  "settings": {
+    "liveServer.settings.multiRootWorkspaceName": "car-cricket"
+  }
 }

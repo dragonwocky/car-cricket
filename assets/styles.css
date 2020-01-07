@@ -1,33 +1,57 @@
-/*
- * Car Cricket - It's cricket! Well, kinda. You play it in a car.
- * ===============================================================
- * Copyright (c) 2019 dragonwocky <thedragonring.bod@gmail.com>, under the ISC License.
- */
+@import url('https://fonts.googleapis.com/css?family=Roboto:100i,400,700,900&display=swap');
+
+#game,
+#history {
+  display: none;
+}
 
 * {
   outline: none;
-}
-
-hr {
-  border: 1px solid #bbb;
-}
-
-@media screen and (min-width: 769px) {
-  .mobile-only {
-    display: none;
-  }
+  background-color: #efefef;
 }
 
 body {
-  margin: 0;
+  font-family: 'Roboto', sans-serif;
   padding: 0;
-  font-family: sans-serif;
+  margin: 0;
 }
 
-@media screen and (min-width: 769px) {
-  body {
-    display: flex;
-  }
+h1 {
+  font-size: 2em;
+  font-weight: 900;
+  text-transform: capitalize;
+  margin: 10px;
+  margin-bottom: 0;
+}
+
+label {
+  font-size: 1.2em;
+  font-weight: 700;
+  text-transform: capitalize;
+  background-color: white;
+}
+
+h2 {
+  font-size: 1.2em;
+  font-weight: 700;
+  text-transform: capitalize;
+  padding: 10px;
+}
+
+.warning,
+.description {
+  font-size: 0.8em;
+  color: #818078;
+  grid-column: 2;
+  background-color: white;
+}
+.name,
+.mode {
+  display: grid;
+  grid-template-columns: 38% 60%;
+  border-top: 1px solid #444;
+  background-color: white;
+  padding: 10px;
 }
 
 .buttons:not(:empty) {
@@ -38,91 +62,31 @@ button {
   display: block;
   border: none;
   width: 100%;
-  font-size: 42px;
-  font-weight: bold;
+  font-size: 1.6em;
+  font-weight: 700;
   padding: 5px;
   color: #444;
+  text-transform: uppercase;
 }
 
 button:hover {
   cursor: pointer;
 }
 
-button.white {
-  background-color: #fff;
+button.start {
+  background-color: white;
+  color: #5ac8fa;
+  text-transform: capitalize;
+  font-weight: 400;
+  text-align: left;
+  padding: 10px 0px 10px 10px;
+
+  border-top: 1px solid #444;
+  border-bottom: 1px solid #444;
+  font-size: 1.3em;
 }
 
-button.white:active {
-  background-color: #eee;
-}
-
-button.grey {
-  background-color: #bbb;
-}
-
-button.grey:active {
-  background-color: #ccc;
-}
-
-button.blue {
-  background-color: #36c;
-  color: #eee;
-}
-
-button.blue:active {
-  background-color: #25b;
-}
-
-button.black {
-  background-color: #000;
-  color: #eee;
-}
-
-button.black:active {
-  background-color: #222;
-}
-
-button.pink {
-  background-color: #f69;
-  color: #eee;
-}
-
-button.pink:active {
-  background-color: #e58;
-}
-
-button.yellow {
-  background-color: #ff0;
-}
-
-button.yellow:active {
-  background-color: #ee0;
-}
-
-button.red {
-  background-color: #c00;
-  color: #eee;
-}
-
-button.red:active {
-  background-color: #b00;
-}
-
-button.end {
-  color: #999;
-}
-
-button.end,
-button.other {
-  border: 1px solid #000;
-  background-color: #fff;
-}
-
-button.end:active,
-button.other:active {
-  background-color: #eee;
-}
-
+/*
 .sidebar {
   background-color: #ddd;
   padding: 1em;
@@ -379,3 +343,4 @@ button.other:active {
     overflow: auto;
   }
 }
+*/
