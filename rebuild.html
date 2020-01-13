@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+<!--
+Car Cricket
+(c) 2020 dragonwocky <thedragonring.bod@gmail.com>
+(https://dragonwocky.me/) under the MIT License
+-->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Car Cricket</title>
+    <link rel="icon" href="logo.png" type="image/png" />
+    <meta name="author" content="dragonwocky" />
+    <meta name="theme-color" content="#B20000" />
+
+    <meta name="twitter:site" content="@TheDragonRing" />
+    <meta name="twitter:creator" content="@TheDragonRing" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Car Cricket" />
+    <meta property="og:url" content="https://dragonwocky.me/car-cricket/" />
+    <meta property="og:description" content="//desc//" />
+    <meta
+      property="og:image"
+      content="https://dragonwocky.me/car-cricket/assets/web-icon.png"
+    />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sear.js" />
+    <meta name="twitter:description" content="//desc//" />
+    <meta
+      name="twitter:image"
+      content="https://dragonwocky.me/car-cricket/assets/web-icon.png"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styled.css" />
+    <script src="assets/sear.0.4.4.js"></script>
+    <script src="assets/scripts.js"></script>
+    <script></script>
+  </head>
+  <body>
+    <section :else="persisted.playing" id="menu">
+      <div class="title">
+        <img src="assets/web-icon.png" />
+        <h1>Car Cricket</h1>
+      </div>
+
+      <!--
+        title
+        
+        team name
+        game mode
+        (warnings)
+
+        start
+        history
+      -->
+      <div class="interaction">
+        <label for="teamname">team name</label>
+        <input
+          id="teamname"
+          :value="persisted.team"
+          :bind:class="warn,warn"
+          placeholder="team name"
+          type="text"
+          onkeyup="if (event.key === 'Enter') start()"
+        />
+        <p class="detail" :bind:class="warn,warn">
+          a team name is required.
+        </p>
+        <label for="gamemode">select match</label>
+        <select id="gamemode" :value="persisted.type">
+          <option value="free">freeplay</option>
+          <option value="test">test match</option>
+          <option value="t20">t20</option>
+          <option value="day">1-day international</option>
+        </select>
+        <!--
+          (Free play) Wickets are runs are unlimited. You can keep playing until you press "End Innings."
+          (Test Match) The innings ends when ten wickets have fallen, or you can "declare" by pressing "End Innings."
+          (T20) The innings ends when either: ten wickets have fallen, or 20 cars have passed.
+          {One Day International} The innings ends when either: ten wickets have fallen, or 50 cars have passed.
+        -->
+        <p class="detail">
+          <i>(conditions)</i> <span id="conditions" :text="conditions"></span>
+        </p>
+      </div>
+      <button class="start" onclick="start()">
+        start innings
+      </button>
+    </section>
+    <section :if="persisted.playing" id="game">
+      <div class="interaction">
+        <button class="white" onclick="score(1)">one</button>
+        <button class="grey" onclick="score(2)">two</button>
+        <button class="blue" onclick="score(3)">three</button>
+        <button class="black" onclick="score(4)">four</button>
+        <button class="pink" onclick="score(5)">five</button>
+        <button class="yellow" onclick="score(6)">six</button>
+        <button
+          class="red"
+          onclick="app.persisted.balls++; app.persisted.wickets++"
+        >
+          wicket
+        </button>
+      </div>
+      <br />
+      <p class="detail">
+        team:
+        <b><span :text="persisted.team"></span></b> | score:
+        <b><span :text="persisted.runs"></span></b> for
+        <b><span :text="persisted.wickets"></span></b> | overs:
+        <b><span :text="overs"></span></b> | time:
+        <b><span :text="time"></span></b>
+      </p>
+      <br />
+      <div class="actions">
+        <button onclick="end()">end innings</button>
+        <button onclick="history()">history</button>
+      </div>
+    </section>
+  </body>
+</html>
