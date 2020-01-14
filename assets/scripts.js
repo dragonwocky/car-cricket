@@ -101,8 +101,8 @@ function end(msg) {
   app.persisted.playing = false;
   app.popup.history = false;
   let save = `team: <b>${app.persisted.team}</b>
-  | score: <b>${app.persisted.runs}</b> for
-    <b>${app.persisted.wickets}</b>
+  | score: <b>${app.persisted.wickets}</b> for
+    <b>${app.persisted.runs}</b>
   | overs: <b>${app.overs}</b>
   | time: <b>${app.time}</b>
   | type: <b>`;
