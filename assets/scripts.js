@@ -146,7 +146,7 @@ const popup = {
   toggle() {
     if(app.popup.open) {
       popup.close();
-    } else history.open();
+    } else history();
   }
 };
 
