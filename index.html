@@ -1,20 +1,57 @@
 <!DOCTYPE html>
+
+<!--
+Car Cricket
+(c) 2020 dragonwocky <thedragonring.bod@gmail.com>
+(https://dragonwocky.me/) under the MIT License
+-->
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Cricket</title>
+    <link rel="icon" href="assets/web-icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-icon.png" />
+    <meta name="author" content="dragonwocky" />
+    <meta name="theme-color" content="#B20000" />
 
-    <link rel="stylesheet" href="assets/styles.css" />
+    <meta name="twitter:site" content="@TheDragonRing" />
+    <meta name="twitter:creator" content="@TheDragonRing" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Car Cricket" />
+    <meta property="og:url" content="https://dragonwocky.me/car-cricket/" />
+    <meta property="og:description" content="//desc//" />
+    <meta
+      property="og:image"
+      content="https://dragonwocky.me/car-cricket/assets/web-icon.png"
+    />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sear.js" />
+    <meta name="twitter:description" content="//desc//" />
+    <meta
+      name="twitter:image"
+      content="https://dragonwocky.me/car-cricket/assets/web-icon.png"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styled.css" />
     <script src="assets/sear.0.4.4.js"></script>
     <script src="assets/scripts.js"></script>
-
-    <!-- Icons -->
-    <link rel="shortcut icon" href="assets/web-icon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="assets/apple-icon.png" />
+    <script></script>
   </head>
   <body>
     <section :else="persisted.playing" id="menu">
+      <div class="title">
+        <img src="assets/web-icon.png" />
+        <h1>Car Cricket</h1>
+      </div>
+
       <!--
         title
         
@@ -25,29 +62,25 @@
         start
         history
       -->
-      <div class="title">
-        <h1>car cricket</h1>
-      </div>
-      <div class="name">
-        <label for="teamname">team name:</label>
+      <div class="interaction">
+        <label for="teamname">team name</label>
         <input
           id="teamname"
           :value="persisted.team"
+          :bind:class="warn,warn"
           placeholder="team name"
           type="text"
           onkeyup="if (event.key === 'Enter') start()"
         />
-        <p class="warning" :bind:style="warn,color:#b20000">
+        <p class="detail" :bind:class="warn,warn">
           a team name is required.
         </p>
-      </div>
-      <div class="mode">
-        <label for="gamemode">select match:</label>
+        <label for="gamemode">select match</label>
         <select id="gamemode" :value="persisted.type">
-          <option value="free">Free Play</option>
-          <option value="test">Test Match</option>
-          <option value="t20">T20</option>
-          <option value="day">One Day International</option>
+          <option value="free">freeplay</option>
+          <option value="test">test match</option>
+          <option value="t20">t20</option>
+          <option value="day">1-day international</option>
         </select>
         <!--
           (Free play) Wickets are runs are unlimited. You can keep playing until you press "End Innings."
@@ -55,34 +88,17 @@
           (T20) The innings ends when either: ten wickets have fallen, or 20 cars have passed.
           {One Day International} The innings ends when either: ten wickets have fallen, or 50 cars have passed.
         -->
-        <p>conditions: <span id="conditions" :text="conditions"></span></p>
+        <p class="detail">
+          <i>(conditions)</i> <span id="conditions" :text="conditions"></span>
+        </p>
       </div>
       <div class="actions">
-        <button class="start" onclick="start()">
-          start innings
-        </button>
-        <!-- on menu page, history displays automatically,; doesn't need a button.
-          <button onclick="history()">history</button>
-        -->
-        <div :each="persisted.history">
-          <p>[[:each:id]]. [[:each:value]]</p>
-          <!--
-          list <inning-number>. <team> scored <runs> for <wickets> in a <balls> <gamemode>
-
-          clear
-        --></div>
-        <button onclick="app.history = []">clear</button>
+        <button onclick="start()">start innings</button>
+        <button onclick="history.open()">history</button>
       </div>
     </section>
-
     <section :if="persisted.playing" id="game">
-      <!--
-        scoring buttons
-
-        end
-        history
-      -->
-      <div class="buttons">
+      <div class="interaction">
         <button class="white" onclick="score(1)">one</button>
         <button class="grey" onclick="score(2)">two</button>
         <button class="blue" onclick="score(3)">three</button>
@@ -91,52 +107,50 @@
         <button class="yellow" onclick="score(6)">six</button>
         <button
           class="red"
-          onclick="app.persisted.balls++; app.persisted.wickets++"
+          onclick="app.persisted.wickets++; app.persisted.balls++"
         >
           wicket
         </button>
       </div>
-
-      <div class="details">
-        <p>
-          team:
-          <span :text="persisted.team"></span>
-        </p>
-        <p>
-          score: <span :text="persisted.runs"></span> for
-          <span :text="persisted.wickets"></span>
-        </p>
-        <p>overs: <span :text="overs"></span></p>
-        <p>time: <span :text="time"></span></p>
-      </div>
-
+      <br />
+      <p class="detail">
+        team:
+        <b><span :text="persisted.team"></span></b> | score:
+        <b><span :text="persisted.runs"></span></b> for
+        <b><span :text="persisted.wickets"></span></b> | overs:
+        <b><span :text="overs"></span></b> | time:
+        <b><span :text="time"></span></b>
+      </p>
+      <br />
       <div class="actions">
-        <button onclick="end()">end innings</button>
-        <button onclick="history()">history</button>
+        <button onclick="ask('you are about to end this innings.', end)">declare innings</button>
+        <button onclick="history.open()">history</button>
       </div>
     </section>
 
-    <section :if="popup.open" id="modal">
-      <span class="background" onclick="popup.close()"></span>
-      <div class="content">
-        <button class="close" onclick="popup.close()">x</button>
-        <br />
-        <br />
-        <b :html="popup.title"></b>
-        <div :html="popup.content"></div>
-        <div :bind:style="popup.history,display:block" style="display:none">
-          <h4>history</h4>
-          <div :each="persisted.history">
-            <div class="sidebyside">
-              <p><i>[[:each:id]]</i>. [[:each:value]]</p>
-              <button
-                onclick="app.persisted.history.splice('[[:each:id]]' - 1, 1)"
-              >
-                delete
-              </button>
+    <section id="slideup" :bind:class="popup.open,open">
+      <span class="tag" onclick="popup.toggle()"> </span>
+      <div class="padded">
+       <div :bind:style="popup.check,display:block" style="display:none">
+          <h4>are you sure?</h4>
+          <p :html="popup.check"></p>
+          <button class="action" onclick="sure()">yep</button>
+          <button class="action" onclick="app.popup.check = '';">nope</button>
+        </div>
+      
+        <div :bind:style="popup.check,display:none" style="display:block">
+          <h4 :text="popup.title"></h4>
+          <p :text="popup.content"></p>
+          <div :bind:style="popup.history,display:block" style="display:none">
+             <div :each="persisted.history">
+               <div class="sidebyside">
+                 <p><i>[[:each:id]]</i>. [[:each:value:html]]</p>
+                 <button onclick="ask(`you are about to delete this below history record: <br /> <i>[[:each:id]]</i>. [[:each:value:html]]`, () => { app.persisted.history.splice('[[:each:id]]' - 1, 1); app.popup.check = '' })">delete</button>
+              </div>
             </div>
+            <br />
+            <button class="action" onclick="ask('you are about to delete all history records.', () => { app.persisted.history = []; app.popup.check = '' })">clear</button>
           </div>
-          <button onclick="app.history = []">clear</button>
         </div>
       </div>
     </section>
