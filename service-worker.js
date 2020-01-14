@@ -1,9 +1,11 @@
 !(function() {
   'use strict';
-  const id = '1f564ab3894ede3a46f94d',
+  const id = '1f564xb3894ede3a46f94d',
     files = [
       '/car-cricket',
-      'assets/cricket.png',
+      'assets/web-icon.png',
+      'assets/apple-icon.png',
+      'assets/sear.0.4.4.js',
       'assets/scripts.js',
       'assets/styles.css',
       'index.html'

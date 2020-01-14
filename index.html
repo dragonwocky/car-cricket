@@ -1,139 +1,160 @@
 <!DOCTYPE html>
 
 <!--
-  Car Cricket - It's cricket! Well, kinda. You play it in a car.
-  ===============================================================
-  Copyright (c) 2019 dragonwocky <thedragonring.bod@gmail.com>, under the ISC License.
+Car Cricket
+(c) 2020 dragonwocky <thedragonring.bod@gmail.com>
+(https://dragonwocky.me/) under the MIT License
 -->
 
-<html manifest="cache.manifest">
+<html lang="en">
   <head>
-    <title>Car Cricket</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/styles.css" />
-    <script src="assets/scripts.js"></script>
-    <link rel="shortcut icon" href="assets/cricket.png" type="image/png" />
-    <!-- Homescreen Stuff -->
-    <link rel="manifest" href="manifest.json" />
-    <link rel="apple-touch-icon" href="assets/cricket.png" />
-    <!-- Preview Card -->
+    <title>Car Cricket</title>
+    <link rel="icon" href="assets/web-icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-icon.png" />
     <meta name="author" content="dragonwocky" />
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Car Cricket" />
-    <meta
-      property="og:description"
-      content="This is an example preview card. What more do you want?"
-    />
-    <meta property="og:image" content="assets/cricket.png" />
     <meta name="theme-color" content="#B20000" />
+
     <meta name="twitter:site" content="@TheDragonRing" />
     <meta name="twitter:creator" content="@TheDragonRing" />
-  </head>
-  <body onload="load()">
-    <div class="sidebar">
-      <h1>Car Cricket</h1>
-      <p>It's cricket! Well, kinda. You play it in a car.</p>
-      <hr />
-      <div>
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="free"
-            onclick="set('free')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>Freeplay</label>
-        <br />
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="test"
-            onclick="set('test')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>Test match - 10 wickets</label>
-        <br />
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="t20"
-            onclick="set('t20')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>T20 match - 20 balls/cars <i>or</i> 10 wickets</label>
-        <br />
-        <label class="switch">
-          <input
-            type="radio"
-            name="settings"
-            value="day"
-            onclick="set('day')"
-          />
-          <span class="slider"></span>
-        </label>
-        <br class="mobile-only" />
-        <label>One-day match - 30 minutes <i>or</i> 10 wickets</label>
-      </div>
-      <hr />
-      <button class="other" onclick="history()">HISTORY</button>
-    </div>
 
-    <div class="game">
-      <div class="choose">
-        <p>Choose a team name:</p>
-        <input onkeydown="if(event.keyCode === 13) choose(this.value)" />
-        <button onclick="choose(document.querySelector('.choose input').value)">
-          START INNINGS
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Car Cricket" />
+    <meta property="og:url" content="https://dragonwocky.me/car-cricket/" />
+    <meta property="og:description" content="//desc//" />
+    <meta
+      property="og:image"
+      content="https://dragonwocky.me/car-cricket/assets/web-icon.png"
+    />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Sear.js" />
+    <meta name="twitter:description" content="//desc//" />
+    <meta
+      name="twitter:image"
+      content="https://dragonwocky.me/car-cricket/assets/web-icon.png"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script src="assets/sear.0.4.4.js"></script>
+    <script src="assets/scripts.js"></script>
+    <script></script>
+  </head>
+  <body>
+    <section :else="persisted.playing" id="menu">
+      <div class="title">
+        <img src="assets/web-icon.png" />
+        <h1>Car Cricket</h1>
+      </div>
+
+      <!--
+        title
+        
+        team name
+        game mode
+        (warnings)
+
+        start
+        history
+      -->
+      <div class="interaction">
+        <label for="teamname">team name</label>
+        <input
+          id="teamname"
+          :value="persisted.team"
+          :bind:class="warn,warn"
+          placeholder="team name"
+          type="text"
+          onkeyup="if (event.key === 'Enter') start()"
+        />
+        <p class="detail" :bind:class="warn,warn">
+          a team name is required.
+        </p>
+        <label for="gamemode">select match</label>
+        <select id="gamemode" :value="persisted.type">
+          <option value="free">freeplay</option>
+          <option value="test">test match</option>
+          <option value="t20">t20</option>
+          <option value="day">1-day international</option>
+        </select>
+        <!--
+          (Free play) Wickets are runs are unlimited. You can keep playing until you press "End Innings."
+          (Test Match) The innings ends when ten wickets have fallen, or you can "declare" by pressing "End Innings."
+          (T20) The innings ends when either: ten wickets have fallen, or 20 cars have passed.
+          {One Day International} The innings ends when either: ten wickets have fallen, or 50 cars have passed.
+        -->
+        <p class="detail">
+          <i>(conditions)</i> <span id="conditions" :text="conditions"></span>
+        </p>
+      </div>
+      <div class="actions">
+        <button onclick="start()">start innings</button>
+        <button onclick="history.open()">history</button>
+      </div>
+    </section>
+    <section :if="persisted.playing" id="game">
+      <div class="interaction">
+        <button class="white" onclick="score(1)">one</button>
+        <button class="grey" onclick="score(2)">two</button>
+        <button class="blue" onclick="score(3)">three</button>
+        <button class="black" onclick="score(4)">four</button>
+        <button class="pink" onclick="score(5)">five</button>
+        <button class="yellow" onclick="score(6)">six</button>
+        <button
+          class="red"
+          onclick="app.persisted.wickets++; app.persisted.balls++"
+        >
+          wicket
         </button>
       </div>
-      <div class="play">
-        <div class="buttons">
-          <button class="white" onclick="score(1)">ONE</button>
-          <button class="grey" onclick="score(2)">TWO</button>
-          <button class="blue" onclick="score(3)">THREE</button>
-          <button class="black" onclick="score(4)">FOUR</button>
-          <button class="pink" onclick="score(5)">FIVE</button>
-          <button class="yellow" onclick="score(6)">SIX</button>
-          <button class="red" onclick="score(0, true)">WICKET</button>
-        </div>
-        <div class="info">
-          <p>
-            Team:
-            <span class="team"></span>
-          </p>
-          <p>
-            Score: <span class="runs"></span> for
-            <span class="wickets"></span>
-          </p>
-        </div>
-        <button class="end" onclick="end()">END INNINGS</button>
+      <br />
+      <p class="detail">
+        team:
+        <b><span :text="persisted.team"></span></b> | score:
+        <b><span :text="persisted.runs"></span></b> for
+        <b><span :text="persisted.wickets"></span></b> | overs:
+        <b><span :text="overs"></span></b> | time:
+        <b><span :text="time"></span></b>
+      </p>
+      <br />
+      <div class="actions">
+        <button onclick="ask('you are about to end this innings.', end)">declare innings</button>
+        <button onclick="history.open()">history</button>
       </div>
-    </div>
+    </section>
 
-    <div class="popup modal">
-      <span class="background" onclick="popup(0, 0, false)"></span>
-      <div class="content">
-        <span class="close" onclick="popup(0, 0, false)"></span>
-        <br />
-        <br />
-        <div class="centered">
-          <div class="text"></div>
-          <br />
-          <div class="buttons"></div>
+    <section id="slideup" :bind:class="popup.open,open">
+      <span class="tag" onclick="popup.toggle()"> </span>
+      <div class="padded">
+       <div :bind:style="popup.check,display:block" style="display:none">
+          <h4>are you sure?</h4>
+          <p :html="popup.check"></p>
+          <button class="action" onclick="sure()">yep</button>
+          <button class="action" onclick="app.popup.check = '';">nope</button>
+        </div>
+      
+        <div :bind:style="popup.check,display:none" style="display:block">
+          <h4 :text="popup.title"></h4>
+          <p :text="popup.content"></p>
+          <div :bind:style="popup.history,display:block" style="display:none">
+             <div :each="persisted.history">
+               <div class="sidebyside">
+                 <p><i>[[:each:id]]</i>. [[:each:value:html]]</p>
+                 <button onclick="ask(`you are about to delete this below history record: <br /> <i>[[:each:id]]</i>. [[:each:value:html]]`, () => { app.persisted.history.splice('[[:each:id]]' - 1, 1); app.popup.check = '' })">delete</button>
+              </div>
+            </div>
+            <br />
+            <button class="action" onclick="ask('you are about to delete all history records.', () => { app.persisted.history = []; app.popup.check = '' })">clear</button>
+          </div>
         </div>
       </div>
-    </div>
-
+    </section>
+    
     <script>
       if ('serviceWorker' in navigator)
         navigator.serviceWorker.register('service-worker.js', {
