@@ -171,7 +171,6 @@ select:focus {
 button {
   font: 0.9em var(--font);
   padding: 0.35em 1.2em;
-  margin: 0;
   border: none;
   border-radius: 0.3em;
   transition: 0.2s;
@@ -190,6 +189,7 @@ button:hover {
   font-size: 2.25em;
   font-weight: bold;
   border-radius: 0;
+  margin: 0;
 }
 .interaction button:first-of-type {
   border-top-right-radius: 0.3em;
