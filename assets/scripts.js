@@ -1,3 +1,5 @@
+let sure;
+
 const app = new Sear({
   persist: 'car-cricket',
   format: {
@@ -44,8 +46,11 @@ const app = new Sear({
       }
     },
     popup: {
-      open: false,
+      open() {
+        return ((this.popup.history || this.popup.content) && this.popup.title) || this.popup.check && sure;
+      },
       history: false,
+      check: '',
       title: '',
       content: ''
     }
@@ -59,14 +64,14 @@ const app = new Sear({
         if (!this.persisted.playing) return;
         this.persisted.seconds++;
         if (this.persisted.type === 'day' && this.persisted.seconds >= 1800)
-          end('time');
+          end('the innings has ended! (30 minutes)');
       }, 1000);
     },
     'persisted.balls'() {
       if (this.persisted.type === 'free') return;
       if (this.persisted.type === 't20' && this.persisted.balls >= 24)
-        end('overs');
-      if (this.persisted.wickets >= 10) end('wickets');
+        end('the innings has ended! (4 overs)');
+      if (this.persisted.wickets >= 10) end('you were bowled out! (10 wickets)');
     }
   }
 });
@@ -76,6 +81,7 @@ setTimeout(() => {
 }, 1000);
 
 function reset() {
+  popup.close();
   app.persisted.runs = 0;
   app.persisted.wickets = 0;
   app.persisted.balls = 0;
@@ -94,19 +100,19 @@ function start() {
 function end(msg) {
   app.persisted.playing = false;
   app.popup.history = false;
-  let save = `${app.persisted.team} scored ${app.persisted.runs} for ${app.persisted.wickets} in ${app.overs} of `;
+  let save = `<b>${app.persisted.team}</b> scored <b>${app.persisted.runs}</b> for <b>${app.persisted.wickets}</b> in <b>${app.overs}</b> overs of <b>`;
   switch (app.persisted.type) {
     case 'free':
-      save += 'freeplay.';
+      save += '<b>freeplay</b>.';
       break;
     case 'test':
-      save += 'a test match.';
+      save += 'a <b>test match</b>.';
       break;
     case 't20':
-      save += 'a T20 match.';
+      save += 'a <b>t20 match</b>.';
       break;
     case 'day':
-      save += 'a 1-day International match.';
+      save += 'a <b>1-day international match</b>.';
   }
   app.persisted.history.push(save);
   app.persisted.team = '';
@@ -119,20 +125,33 @@ function score(runs) {
   app.persisted.balls++;
 }
 
+function ask(msg, func) {
+  sure = func;
+  app.popup.check = msg;
+}
+
 const popup = {
   open(title, content) {
+    popup.close();
     app.popup.title = title;
     app.popup.content = content;
-    app.popup.open = true;
   },
   close() {
-    app.popup.open = false;
+    sure = undefined;
     app.popup.history = false;
+    app.popup.check = '';
+    app.popup.title = '';
     app.popup.content = '';
+  },
+  toggle() {
+    if(app.popup.open) {
+      popup.close();
+    } else history.open();
   }
 };
 
 function history() {
+  popup.close();
+  app.popup.title = 'history';
   app.popup.history = true;
-  app.popup.open = true;
 }

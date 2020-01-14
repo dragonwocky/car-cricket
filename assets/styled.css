@@ -30,8 +30,6 @@ body {
 }
 
 body {
-  width: 100%;
-  margin: 0;
   padding: 1em;
   font-family: var(--font);
   background-color: var(--bg);
@@ -44,7 +42,7 @@ section {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 5em;
+  padding-bottom: 4em;
 }
 
 .title {
@@ -69,12 +67,14 @@ section {
 
 .detail {
   font-size: 0.8em;
-  text-align: right;
+  text-align: center;
   color: var(--grey);
 }
 .detail.warn {
-  text-align: right;
   color: var(--warn);
+}
+.interaction .detail {
+  text-align: right;
 }
 
 .interaction {
@@ -182,24 +182,6 @@ button:hover {
   cursor: pointer;
 }
 
-.sidebyside {
-  display: flex;
-  justify-content: space-around;
-}
-.sidebyside > * {
-  margin: 2.5px;
-}
-.sidebyside :first-child {
-  flex-grow: 1;
-}
-
-@media screen and (max-width: 900px) {
-  .subtitle {
-    width: 100%;
-    margin: 0.3em;
-  }
-}
-
 .interaction button {
   width: 100%;
   padding: 5px;
@@ -268,4 +250,70 @@ button:hover {
 .red:hover {
   color: var(--button-red);
   background-color: var(--button-red);
+}
+
+#slideup {
+  background-color: #fff;
+  min-width: calc(100% - 2em);
+  min-height: 1em;
+  max-height: 1.5em;
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 1.5em;
+  left: 1em;
+  right: 1em;
+  border-top-right-radius: 0.6em;
+  border-top-left-radius: 0.6em;
+  transition: 0.4s;
+}
+
+#slideup.open {
+  max-height: 97.5%;
+}
+
+#slideup > span.tag {
+  background-color: #ccc;
+  min-width: 3em;
+  min-height: 0.4em;
+  padding: 0.2em 1.5em;
+  position: relative;
+  top: 1.25em;
+  border-radius: 0.3em;
+}
+
+#slideup.open > span.tag {
+  top: 0.75em;
+}
+
+#slideup > div.padded {
+  margin-top: 1em;
+  padding: 0 1em;
+  max-height: 95%;
+  overflow: auto;
+}
+
+#slideup div {
+  width: 100%;
+}
+
+.padded > p {
+  margin: 0;
+}
+.padded .action {
+  width: 100%;
+}
+
+.sidebyside {
+  display: flex;
+  justify-content: space-around;
+}
+.sidebyside > * {
+  margin: 2.5px;
+}
+.sidebyside :first-child {
+  flex-grow: 1;
+}
+.sidebyside button {
+  text-align: center;
+  font-size: 0.8em;
 }

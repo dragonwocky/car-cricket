@@ -11,7 +11,8 @@ Car Cricket
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Cricket</title>
-    <link rel="icon" href="logo.png" type="image/png" />
+    <link rel="icon" href="assets/web-icon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-icon.png" />
     <meta name="author" content="dragonwocky" />
     <meta name="theme-color" content="#B20000" />
 
@@ -91,9 +92,10 @@ Car Cricket
           <i>(conditions)</i> <span id="conditions" :text="conditions"></span>
         </p>
       </div>
-      <button class="start" onclick="start()">
-        start innings
-      </button>
+      <div class="actions">
+        <button onclick="start()">start innings</button>
+        <button onclick="history.open()">history</button>
+      </div>
     </section>
     <section :if="persisted.playing" id="game">
       <div class="interaction">
@@ -105,7 +107,7 @@ Car Cricket
         <button class="yellow" onclick="score(6)">six</button>
         <button
           class="red"
-          onclick="app.persisted.balls++; app.persisted.wickets++"
+          onclick="app.persisted.wickets++; app.persisted.balls++"
         >
           wicket
         </button>
@@ -121,8 +123,35 @@ Car Cricket
       </p>
       <br />
       <div class="actions">
-        <button onclick="end()">end innings</button>
-        <button onclick="history()">history</button>
+        <button onclick="ask('you are about to end this innings.', end)">declare innings</button>
+        <button onclick="history.open()">history</button>
+      </div>
+    </section>
+
+    <section id="slideup" :bind:class="popup.open,open">
+      <span class="tag" onclick="popup.toggle()"> </span>
+      <div class="padded">
+       <div :bind:style="popup.check,display:block" style="display:none">
+          <h4>are you sure?</h4>
+          <p :html="popup.check"></p>
+          <button class="action" onclick="sure()">yep</button>
+          <button class="action" onclick="app.popup.check = '';">nope</button>
+        </div>
+      
+        <div :bind:style="popup.check,display:none" style="display:block">
+          <h4 :text="popup.title"></h4>
+          <p :text="popup.content"></p>
+          <div :bind:style="popup.history,display:block" style="display:none">
+             <div :each="persisted.history">
+               <div class="sidebyside">
+                 <p><i>[[:each:id]]</i>. [[:each:value:html]]</p>
+                 <button onclick="ask(`you are about to delete this below history record: <br /> <i>[[:each:id]]</i>. [[:each:value:html]]`, () => { app.persisted.history.splice('[[:each:id]]' - 1, 1); app.popup.check = '' })">delete</button>
+              </div>
+            </div>
+            <br />
+            <button class="action" onclick="ask('you are about to delete all history records.', () => { app.persisted.history = []; app.popup.check = '' })">clear</button>
+          </div>
+        </div>
       </div>
     </section>
   </body>
