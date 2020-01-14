@@ -100,19 +100,24 @@ function start() {
 function end(msg) {
   app.persisted.playing = false;
   app.popup.history = false;
-  let save = `<b>${app.persisted.team}</b> scored <b>${app.persisted.runs}</b> for <b>${app.persisted.wickets}</b> in <b>${app.overs}</b> overs of <b>`;
+  let save = `team: <b>${app.persisted.team}</b>
+  | score: <b>${app.persisted.runs}</b> for
+    <b>${app.persisted.wickets}</b>
+  | overs: <b>${app.overs}</b>
+  | time: <b>${app.time}</b>
+  | type: <b>`;
   switch (app.persisted.type) {
     case 'free':
-      save += '<b>freeplay</b>.';
+      save += 'freeplay</b>';
       break;
     case 'test':
-      save += 'a <b>test match</b>.';
+      save += 'test match</b>';
       break;
     case 't20':
-      save += 'a <b>t20 match</b>.';
+      save += 't20 match</b>';
       break;
     case 'day':
-      save += 'a <b>1-day international match</b>.';
+      save += '1-day international match</b>';
   }
   app.persisted.history.push(save);
   app.persisted.team = '';
