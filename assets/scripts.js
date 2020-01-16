@@ -118,7 +118,7 @@ function end(msg) {
     case 'day':
       save += 'one day international match</b>';
   }
-  app.persisted.history.shift(save);
+  app.persisted.history.unshift(save);
   app.persisted.team = '';
   reset();
   if (msg) popup.open('game over', msg + '<p><i>results</i></p> ' + save);
