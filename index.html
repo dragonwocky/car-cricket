@@ -131,7 +131,9 @@ Car Cricket
     </section>
 
     <section id="slideup" :bind:class="popup.open,open">
-      <span class="tag" onclick="popup.toggle()"> </span>
+      <div id="drag" onclick="popup.toggle()">
+        <span id="tag" > </span>
+      </div>
       <div class="padded">
        <div :bind:style="popup.check,display:block" style="display:none">
           <h4>are you sure?</h4>

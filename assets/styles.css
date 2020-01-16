@@ -258,38 +258,45 @@ button:hover {
 #slideup {
   background-color: #fff;
   min-width: calc(100% - 2em);
-  min-height: 1em;
+  min-height: 1.5em;
   max-height: 1.5em;
   position: fixed;
   bottom: 0;
-  padding-bottom: 1.5em;
   left: 1em;
   right: 1em;
+  padding: 0;
   border-top-right-radius: 0.6em;
   border-top-left-radius: 0.6em;
   transition: 0.4s;
 }
 
 #slideup.open {
+  padding-bottom: 1.5em;
   max-height: 97.5%;
 }
 
-#slideup > span.tag {
-  background-color: #ccc;
-  min-width: 3em;
-  min-height: 0.4em;
-  padding: 0.2em 1.5em;
-  position: relative;
-  top: 1.25em;
-  border-radius: 0.3em;
+#slideup #drag {
+  min-width: 100%;
+  padding-top: 1.5em;
 }
 
-#slideup.open > span.tag {
-  top: 0.75em;
+#slideup > #drag span#tag {
+  background-color: #ccc;
+  min-height: 0.4em;
+  min-width: 3em;
+  padding: 0.2em 1.5em;
+  position: absolute;
+  top: calc(0.75em - 0.2em);
+  left: calc(50% - 1.5em);
+  border-radius: 0.3em;
+  transition: 0.3s;
+}
+
+#slideup.open > #drag span#tag {
+ top: 0.75em;
 }
 
 #slideup > div.padded {
-  margin-top: 1em;
   padding: 0 1em;
   max-height: 95%;
   overflow: auto;
