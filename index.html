@@ -149,7 +149,7 @@ Car Cricket
              <div :each="persisted.history">
                <div class="sidebyside">
                  <p><i>[[:each:id]]</i>. [[:each:value:html]]</p>
-                 <button onclick="ask(`you are about to delete this below history record: <br /> <i>[[:each:id]]</i>. [[:each:value:html]]`, () => { app.persisted.history.splice('[[:each:id]]' - 1, 1); app.popup.check = '' })">delete</button>
+                 <button onclick="ask(`you are about to delete the below history record: <br /> <i>[[:each:id]]</i>. [[:each:value:html]]`, () => { app.persisted.history.splice('[[:each:id]]' - 1, 1); app.popup.check = '' })">delete</button>
               </div>
             </div>
             <br />
