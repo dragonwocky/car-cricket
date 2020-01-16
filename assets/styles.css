@@ -6,7 +6,7 @@
 }
 
 :root {
-  --bg: #f7f9f9;
+  --bg: #f9f9f9;
   --primary: #b20000;
   --contrast: #000;
   --grey: #818078;
@@ -122,6 +122,7 @@ select {
   -webkit-appearance: none;
   border-radius: 0;
   transition: 50ms;
+  background: #fff;
 }
 input[type='text']::placeholder {
   color: var(--grey);
@@ -201,11 +202,21 @@ button:hover {
   border-bottom-left-radius: 0.3em;
 }
 
+@keyframes white {
+ 0%, 90% {
+   color: var(--button-white);
+ }
+ 100% {
+   color: #000;
+ }
+}
+
 .white {
   background-color: var(--button-white);
 }
 .white:hover {
-  color: var(--button-white);
+  animation: white 1s forwards;
+  color: #000;
   background-color: var(--button-white);
 }
 .grey {

@@ -127,6 +127,7 @@ function end(msg) {
 function score(runs) {
   app.persisted.runs += runs;
   app.persisted.balls++;
+  this.blur();
 }
 
 function ask(msg, func) {
