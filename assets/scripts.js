@@ -47,7 +47,7 @@ const app = new Sear({
     },
     popup: {
       open() {
-        return ((this.popup.history || this.popup.content) && this.popup.title) || this.popup.check && sure;
+        return (((this.popup.history || this.popup.content) && this.popup.title) || this.popup.check && sure);
       },
       history: false,
       check: '',
@@ -99,7 +99,6 @@ function start() {
 }
 function end(msg) {
   app.persisted.playing = false;
-  app.popup.history = false;
   let save = `team: <b>${app.persisted.team}</b>
   | score: <b>${app.persisted.wickets}</b> for
     <b>${app.persisted.runs}</b>
@@ -119,10 +118,10 @@ function end(msg) {
     case 'day':
       save += 'one day international match</b>';
   }
-  app.persisted.history.push(save);
+  app.persisted.history.shift(save);
   app.persisted.team = '';
-  if (msg) popup.open('game over', msg);
   reset();
+  if (msg) popup.open('game over', msg + '<p><i>results</i></p> ' + save);
 }
 
 function score(runs) {
@@ -157,7 +156,7 @@ const popup = {
 
 function history() {
   popup.close();
-  app.popup.title = 'history';
+  app.popup.title = 'history (by recent)';
   app.popup.history = true;
 }
 

@@ -144,7 +144,7 @@ Car Cricket
       
         <div :bind:style="popup.check,display:none" style="display:block">
           <h4 :text="popup.title"></h4>
-          <p :text="popup.content"></p>
+          <p :html="popup.content"></p>
           <div :bind:style="popup.history,display:block" style="display:none">
              <div :each="persisted.history">
                <div class="sidebyside">
