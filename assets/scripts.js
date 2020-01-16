@@ -114,10 +114,10 @@ function end(msg) {
       save += 'test match</b>';
       break;
     case 't20':
-      save += 't20 match</b>';
+      save += 'T20 match</b>';
       break;
     case 'day':
-      save += '1-day international match</b>';
+      save += 'one day international match</b>';
   }
   app.persisted.history.push(save);
   app.persisted.team = '';
@@ -160,3 +160,66 @@ function history() {
   app.popup.title = 'history';
   app.popup.history = true;
 }
+
+let slideup;
+
+const drag = {
+  initial: 0,
+  current: 0,
+  active: false,
+  elem: null,
+  container: null,
+  start(e) {
+    if (e.target === drag.elem) {
+      drag.active = true;
+      
+      
+    if (e.type === "touchstart") {
+      drag.initial = e.touches[0].clientY;
+    } else drag.initial = e.clientY;
+  }},
+  end(e) {
+    if (drag.active) {
+    
+    drag.active = false;
+    
+    slideup.style['min-height'] = "";
+    slideup.style['height'] = "";
+    slideup.style['max-height'] = "";
+  }},
+  move(e) {
+    if (drag.active) {
+      
+    
+    if (e.type === "touchmove") {
+      drag.current = e.touches[0].clientY;
+    } else
+      drag.current = e.clientY;
+      
+    if (drag.initial + 50 < drag.current ) {
+      popup.close(); }
+    if (drag.initial - 25 >= drag.current && !app.popup.open) history();
+    
+    // slideup.style['min-height'] = "calc(100% - " + drag.current + "px)";
+    // slideup.style['height'] = "calc(100% - " + drag.current + "px)";
+    // slideup.style['max-height'] = "calc(100% - " + drag.current + "px)";
+   
+  }}
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+
+slideup = document.querySelector("#slideup");
+
+drag.elem = document.querySelector("#drag");
+drag.container = document.body;
+
+drag.container.addEventListener("touchstart", drag.start, false);
+drag.container.addEventListener("touchend", drag.end, false);
+drag.container.addEventListener("touchmove", drag.move, false);
+
+drag.container.addEventListener("mousedown", drag.start, false);
+drag.container.addEventListener("mouseup", drag.end, false);
+drag.container.addEventListener("mousemove", drag.move, false);
+
+});
