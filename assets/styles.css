@@ -275,10 +275,6 @@ button:hover {
   max-height: 97.5%;
 }
 
-#slideup.open #drag {
-  padding-top: 2.5em;
-}
-
 #slideup #drag {
   width: 100%;
   padding-top: 1.5em;
