@@ -125,7 +125,7 @@ Car Cricket
       </p>
       <br />
       <div class="actions">
-        <button onclick="ask('you are about to end this innings.', end)">end innings</button>
+        <button onclick="ask('you are about to end this innings.', () => end('you chose to end the innings.'))">end innings</button>
         <button onclick="history()">history</button>
       </div>
     </section>
