@@ -6,7 +6,7 @@
 }
 
 :root {
-  --bg: #f7f9f9;
+  --bg: #f9f9f9;
   --primary: #b20000;
   --contrast: #000;
   --grey: #818078;
@@ -35,7 +35,7 @@ body {
   background-color: var(--bg);
 }
 
-section {
+section:not(#popup) {
   min-width: 100%;
   min-height: 100%;
   display: flex;
@@ -122,6 +122,7 @@ select {
   -webkit-appearance: none;
   border-radius: 0;
   transition: 50ms;
+  background: #fff;
 }
 input[type='text']::placeholder {
   color: var(--grey);
@@ -169,12 +170,14 @@ select:focus {
 }
 
 button {
-  font: 1em var(--font);
+  font: 0.9em var(--font);
   padding: 0.35em 1.2em;
+  margin: 0.35em 0;
   border: none;
   border-radius: 0.3em;
   transition: 0.2s;
   background-color: #eaecee;
+  text-transform: uppercase;
 }
 button:hover {
   color: #fff;
@@ -188,6 +191,7 @@ button:hover {
   font-size: 2.25em;
   font-weight: bold;
   border-radius: 0;
+  margin: 0;
 }
 .interaction button:first-of-type {
   border-top-right-radius: 0.3em;
@@ -198,11 +202,22 @@ button:hover {
   border-bottom-left-radius: 0.3em;
 }
 
+@keyframes white {
+  0%,
+  90% {
+    color: var(--button-white);
+  }
+  100% {
+    color: #000;
+  }
+}
+
 .white {
   background-color: var(--button-white);
 }
 .white:hover {
-  color: var(--button-white);
+  animation: white 1s forwards;
+  color: #000;
   background-color: var(--button-white);
 }
 .grey {
@@ -252,47 +267,50 @@ button:hover {
   background-color: var(--button-red);
 }
 
-#slideup {
+#popup {
   background-color: #fff;
-  min-width: calc(100% - 2em);
-  min-height: 1em;
+  width: calc(100% - 2em);
   max-height: 1.5em;
   position: fixed;
   bottom: 0;
-  padding-bottom: 1.5em;
   left: 1em;
   right: 1em;
   border-top-right-radius: 0.6em;
   border-top-left-radius: 0.6em;
   transition: 0.4s;
+  display: flex;
+  flex-direction: column;
 }
-
-#slideup.open {
+#popup.open {
+  padding-bottom: 1.5em;
   max-height: 97.5%;
 }
 
-#slideup > span.tag {
-  background-color: #ccc;
-  min-width: 3em;
-  min-height: 0.4em;
-  padding: 0.2em 1.5em;
-  position: relative;
-  top: 1.25em;
-  border-radius: 0.3em;
+#popup #drag {
+  padding: 0;
+  padding-top: 1.5em;
 }
-
-#slideup.open > span.tag {
+#popup > #drag span#tag {
+  background-color: #ccc;
+  height: 0.4em;
+  width: 3em;
+  padding: 0.2em 1.5em;
+  position: absolute;
+  top: calc(0.75em - 0.2em);
+  left: calc(50% - 1.5em);
+  border-radius: 0.3em;
+  transition: 0.3s;
+}
+#popup.open > #drag span#tag {
   top: 0.75em;
 }
 
-#slideup > div.padded {
-  margin-top: 1em;
+#popup > div {
   padding: 0 1em;
-  max-height: 95%;
+  height: 95%;
   overflow: auto;
 }
-
-#slideup div {
+#popup div {
   width: 100%;
 }
 
