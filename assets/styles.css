@@ -7,11 +7,16 @@
 
 :root {
   --bg: #f9f9f9;
+  --slideup: #fff;
+  --slideup-tab: #ccc;
 
   --font: 'Open Sans', sans-serif;
   --font-colour: #111;
   --title-font: 2em Courier, monospace;
   --title-weight: 500;
+
+  --button: #eaecee;
+  --button-active: #000;
 
   --primary: #b20000;
   --contrast: #000;
@@ -22,6 +27,21 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --bg: #1c1c1e;
+    --slideup: #242426;
+    --slideup-tab: #3a3a3c;
+
+    --font-colour: #ddd;
+    --title-weight: 600;
+
+    --button: #151515;
+    --button-active: #eaecee;
+
+    --primary: #820000;
+    --contrast: #ccc;
+    --complement: #2c2c2e;
+    --warn: #e20d00;
+    --grey: #d7dbdd;
   }
 }
 
@@ -49,13 +69,13 @@ section:not(#slideup) {
   align-items: center;
 }
 
-.warn {
-  color: var(--warn);
-}
 .detail {
   font-size: 0.8em;
   text-align: center;
   color: var(--grey);
+}
+.warn {
+  color: var(--warn);
 }
 
 .title {
@@ -116,6 +136,7 @@ label {
 }
 input[type='text'],
 select {
+  color: var(--font-colour);
   -webkit-appearance: none;
   font-size: 1em;
   font-family: var(--font);
@@ -177,12 +198,13 @@ button {
   border: none;
   border-radius: 0.3em;
   transition: 0.2s;
-  background-color: #eaecee;
+  color: var(--contrast);
+  background-color: var(--button);
   text-transform: uppercase;
 }
 button:hover {
-  color: #fff;
-  background-color: #000;
+  color: var(--complement);
+  background-color: var(--button-active);
   cursor: pointer;
 }
 .interaction button {
@@ -249,7 +271,7 @@ button:hover {
   bottom: 0;
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: var(--slideup);
   border-top-right-radius: 0.6em;
   border-top-left-radius: 0.6em;
   transition: 0.4s;
@@ -262,7 +284,7 @@ button:hover {
   padding: 1.5em 0 0 0;
 }
 #slideup #drag #tab {
-  background-color: #ccc;
+  background-color: var(--slideup-tab);
   height: 0.4em;
   width: 3em;
   padding: 0.2em 1.5em;
