@@ -27,7 +27,7 @@ Car Cricket
     <meta name="twitter:site" content="@TheDragonRing" />
     <meta name="twitter:creator" content="@TheDragonRing" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Sear.js" />
+    <meta name="twitter:title" content="Car Cricket" />
     <meta name="twitter:description" content="//desc//" />
     <meta
       name="twitter:image"
@@ -40,137 +40,91 @@ Car Cricket
     />
     <link rel="stylesheet" href="assets/styles.css" />
 
-    <script src="assets/sear.0.5.js"></script>
+    <script src="https://dragonwocky.me/sear/sear.min.js"></script>
     <script src="assets/scripts.js"></script>
 
     <link rel="manifest" href="manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
   </head>
   <body>
-    <section :else="persisted.playing" id="menu">
-      <div class="title">
-        <img src="assets/web-icon.png" />
-        <h1>Car Cricket</h1>
-      </div>
+    <div id="wrapper">
+      <section id="menu" :else="client.playing">
+        <div class="title">
+          <img src="assets/web-icon.png" />
+          <h1>Car Cricket</h1>
+        </div>
+        <div class="interaction">
+          <label for="teamname">team name</label>
+          <input
+            id="teamname"
+            :value="client.team"
+            :bind:class="warn=warn"
+            placeholder="team name"
+            type="text"
+            onkeyup="if (event.key === 'Enter') game.start()"
+          />
+          <p class="detail" :bind:class="warn=warn">
+            a team name is required.
+          </p>
+          <label for="gamemode">select match</label>
+          <select id="gamemode" :value="client.type">
+            <option value="free">freeplay</option>
+            <option value="test">test match</option>
+            <option value="t20">T20</option>
+            <option value="day">one day international</option>
+          </select>
+          <p class="detail">
+            <i>(conditions)</i> <span id="conditions" :text="conditions"></span>
+          </p>
+        </div>
+        <div class="actions">
+          <button onclick="game.start()">start innings</button>
+          <button onclick="slideup.history()">history</button>
+        </div>
+      </section>
 
-      <!--
-        title
-        
-        team name
-        game mode
-        (warnings)
-
-        start
-        history
-      -->
-      <div class="interaction">
-        <label for="teamname">team name</label>
-        <input
-          id="teamname"
-          :value="persisted.team"
-          :bind:class="warn,warn"
-          placeholder="team name"
-          type="text"
-          onkeyup="if (event.key === 'Enter') start()"
-        />
-        <p class="detail" :bind:class="warn,warn">
-          a team name is required.
-        </p>
-        <label for="gamemode">select match</label>
-        <select id="gamemode" :value="persisted.type">
-          <option value="free">freeplay</option>
-          <option value="test">test match</option>
-          <option value="t20">T20</option>
-          <option value="day">one day international</option>
-        </select>
-        <!--
-          (Free play) Wickets are runs are unlimited. You can keep playing until you press "End Innings."
-          (Test Match) The innings ends when ten wickets have fallen, or you can "declare" by pressing "End Innings."
-          (T20) The innings ends when either: ten wickets have fallen, or 20 cars have passed.
-          {One Day International} The innings ends when either: ten wickets have fallen, or 50 cars have passed.
-        -->
+      <section id="game" :if="client.playing">
+        <div class="interaction">
+          <button class="white" onclick="game.score(1)">one</button>
+          <button class="grey" onclick="game.score(2)">two</button>
+          <button class="blue" onclick="game.score(3)">three</button>
+          <button class="black" onclick="game.score(4)">four</button>
+          <button class="pink" onclick="game.score(5)">five</button>
+          <button class="yellow" onclick="game.score(6)">six</button>
+          <button class="red" onclick="app['client'].wickets++; app['client'].balls++;">
+            wicket
+          </button>
+        </div>
+        <br />
         <p class="detail">
-          <i>(conditions)</i> <span id="conditions" :text="conditions"></span>
+          team:
+          <b><span :text="client.team"></span></b> | score:
+          <b><span :text="client.wickets"></span></b> for
+          <b><span :text="client.runs"></span></b> | overs:
+          <b><span :text="overs"></span></b> | time:
+          <b><span :text="time"></span></b>
         </p>
-      </div>
-      <div class="actions">
-        <button onclick="start()">start innings</button>
-        <button onclick="history()">history</button>
-      </div>
-    </section>
-    <section :if="persisted.playing" id="game">
-      <div class="interaction">
-        <button class="white" onclick="score(1)">one</button>
-        <button class="grey" onclick="score(2)">two</button>
-        <button class="blue" onclick="score(3)">three</button>
-        <button class="black" onclick="score(4)">four</button>
-        <button class="pink" onclick="score(5)">five</button>
-        <button class="yellow" onclick="score(6)">six</button>
-        <button
-          class="red"
-          onclick="app.persisted.wickets++; app.persisted.balls++; this.blur()"
-        >
-          wicket
-        </button>
-      </div>
-      <br />
-      <p class="detail">
-        team:
-        <b><span :text="persisted.team"></span></b> | score:
-        <b><span :text="persisted.wickets"></span></b> for
-        <b><span :text="persisted.runs"></span></b> | overs:
-        <b><span :text="overs"></span></b> | time:
-        <b><span :text="time"></span></b>
-      </p>
-      <br />
-      <div class="actions">
-        <button
-          onclick="ask('you are about to end this innings.', () => end('you chose to end the innings.'))"
-        >
-          end innings
-        </button>
-        <button onclick="history()">history</button>
-      </div>
-    </section>
-
-    <section id="slideup" :bind:class="popup.open,open">
-      <div id="drag" onclick="popup.toggle()">
-        <span id="tag"> </span>
-      </div>
-      <div class="padded">
-        <div :if="popup.check">
-          <h4>are you sure?</h4>
-          <p :html="popup.check"></p>
-          <button class="action" onclick="sure()">yes</button>
-          <button class="action" onclick="nah()">cancel</button>
+        <br />
+        <div class="actions">
+          <button
+            onclick="slideup.confirm('you are about to end this innings.', () => game.end('you chose to end the innings.'))"
+          >
+            end innings
+          </button>
+          <button onclick="slideup.history()">history</button>
         </div>
+      </section>
 
-        <div :else="popup.check">
-          <h4 :text="popup.title"></h4>
-          <p :html="popup.content"></p>
-          <div :if="popup.history">
-            <i :else="persisted.history">none</i>
-            <div :each="persisted.history">
-              <div class="sidebyside">
-                <p><i>[[:each:id]]</i>. [[:each:value:html]]</p>
-                <button
-                  onclick="ask(`you are about to delete the below history record: <br /> <i>[[:each:id]]</i>. [[:each:value:html]]`, () => { app.persisted.history.splice('[[:each:id]]' - 1, 1); app.popup.check = '' }, history)"
-                >
-                  delete
-                </button>
-              </div>
-            </div>
-            <br />
-            <button
-              class="action"
-              onclick="ask('you are about to delete all history records.', () => { app.persisted.history = []; app.popup.check = '' })"
-            >
-              clear
-            </button>
-          </div>
+      <section id="slideup" :bind:class="slideup.open=open">
+        <div id="drag" onclick="slideup.toggle()">
+          <span id="tab"></span>
         </div>
-      </div>
-    </section>
+        <div id="content">
+          <h4 :text="slideup.title"></h4>
+          <p :html="slideup.content"></p>
+        </div>
+      </section>
+    </div>
 
     <script>
       if ('serviceWorker' in navigator)

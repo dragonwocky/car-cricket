@@ -1,58 +1,55 @@
 !(function() {
   'use strict';
-  const id = '1f564xb3894ede3a46f94d',
-    files = [
-      '/car-cricket',
-      'assets/web-icon.png',
-      'assets/apple-icon.png',
-      'assets/sear.0.4.4.js',
-      'assets/scripts.js',
-      'assets/styles.css',
-      'index.html'
-    ],
-    cached = new Set(files);
+  const ID = 'carcricket-1f564xb3894ede3a46f94d',
+    ROOT = '/car-cricket/',
+    ERROR = 'error.html',
+    AUTOCACHE = [
+      ROOT,
+      `${ROOT}assets/web-icon.png`,
+      `${ROOT}assets/apple-icon.png`,
+      `${ROOT}assets/scripts.js`,
+      `${ROOT}assets/styles.css`,
+      `${ROOT}index.html`
+    ];
 
   self.addEventListener('install', event => {
     event.waitUntil(
       caches
-        .open(`carcricket-cache${id}`)
-        .then(cache => cache.addAll(files))
+        .open(ID)
+        .then(cache => cache.addAll(AUTOCACHE))
         .then(() => {
           self.skipWaiting();
         })
     );
-  }),
-    self.addEventListener('activate', event => {
-      event.waitUntil(
-        caches.keys().then(async keys => {
-          for (const key of keys)
-            `carcricket-cache${id}` !== key && (await caches.delete(key));
-          self.clients.claim();
-        })
-      );
-    }),
-    self.addEventListener('fetch', event => {
-      if ('GET' !== event.request.method || event.request.headers.has('range'))
-        return;
-      const url = new URL(event.request.url);
-      url.protocol.startsWith('http') &&
-        ((url.hostname === self.location.hostname &&
-          url.port !== self.location.port) ||
-          (url.host === self.location.host && cached.has(url.pathname)
-            ? event.respondWith(caches.match(event.request))
-            : 'only-if-cached' !== event.request.cache &&
-              event.respondWith(
-                caches.open(`carcricket-offline${id}`).then(async cache => {
-                  try {
-                    const response = await fetch(event.request);
-                    cache.put(event.request, response.clone());
-                    return response;
-                  } catch (err) {
-                    const response = await cache.match(event.request);
-                    if (response) return response;
-                    throw err;
-                  }
-                })
-              )));
-    });
+  });
+  self.addEventListener('activate', event => {
+    event.waitUntil(
+      caches.keys().then(async keys => {
+        for (const key of keys) ID !== key && (await caches.delete(key));
+        self.clients.claim();
+      })
+    );
+  });
+  self.addEventListener('fetch', event => {
+    if (
+      !event.request.url.startsWith(self.location.origin) ||
+      event.request.method !== 'GET'
+    )
+      return void event.respondWith(fetch(event.request));
+    event.respondWith(
+      caches.open(ID).then(async cache => {
+        try {
+          const response = await fetch(event.request);
+          cache.put(event.request, response.clone());
+          return response;
+        } catch (err) {
+          const response = await cache.match(event.request);
+          if (response) return response;
+          const error = await cache.match(new Request(ERROR));
+          if (error) return error;
+          throw err;
+        }
+      })
+    );
+  });
 })();

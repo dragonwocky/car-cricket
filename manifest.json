@@ -4,7 +4,7 @@
   "name": "Car Cricket",
   "short_name": "Car Cricket",
   "display": "standalone",
-  "start_url": "/car-cricket/",
+  "start_url": "/car-cricket/index.html",
   "icons": [
     {
       "src": "assets/apple-icon.png",
