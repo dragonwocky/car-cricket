@@ -169,50 +169,50 @@ const app = new Sear({
   },
   drag = {
     active: false,
-    open: false,
+    moved: false,
     prev: 0,
     current: 0,
     diff: 0,
     targets: [],
     slideup: null,
+    content: null,
     container: null,
     start(e) {
       if (drag.targets.includes(e.target)) {
         drag.active = true;
-        drag.open = app.slideup.open;
+        if (!app.slideup.open) {
+          slideup.history();
+          app.slideup.open = false;
+        }
+        drag.moved = false;
         drag.prev = 0;
         drag.current = 0;
         drag.diff = 0;
         drag.slideup.style['transition'] = '0s';
+        drag.content.style['overflow'] = 'hidden';
       }
     },
     end(e) {
       if (drag.active) {
         drag.active = false;
+        if (!drag.moved) slideup.toggle();
         drag.slideup.style['min-height'] = '';
         drag.slideup.style['max-height'] = '';
         drag.slideup.style['transition'] = '';
+        drag.content.style['overflow'] = '';
       }
     },
     move(e) {
       if (drag.active) {
         e.preventDefault();
-        let check = 5;
+        if (!drag.moved) drag.moved = true;
         if (e.type === 'touchmove') {
           drag.current = e.touches[0].clientY;
-          if (drag.prev < drag.current) drag.diff++;
-          if (drag.prev > drag.current) drag.diff--;
-        } else {
-          drag.current = e.clientY;
-          check = 20;
-          if (drag.prev < drag.current) drag.diff--;
-          if (drag.prev > drag.current) drag.diff++;
-        }
-        if (drag.diff >= check) slideup.close();
-        if (drag.diff <= -check)
-          if (drag.open) {
-            app.slideup.open = true;
-          } else slideup.history();
+        } else drag.current = e.clientY;
+        if (drag.prev < drag.current) drag.diff = (drag.diff + 1) % 15;
+        if (drag.prev > drag.current) drag.diff = (drag.diff - 1) % 15;
+        if (drag.diff >= 7) app.slideup.open = false;
+        if (drag.diff <= -7) app.slideup.open = true;
         drag.prev = drag.current;
         drag.slideup.style['min-height'] = 'calc(100% - ' + drag.current + 'px)';
         drag.slideup.style['max-height'] = 'calc(100% - ' + drag.current + 'px)';
@@ -223,6 +223,7 @@ const app = new Sear({
 window.addEventListener('DOMContentLoaded', () => {
   drag.targets = [document.querySelector('#drag'), document.querySelector('#tab')];
   drag.slideup = document.querySelector('#slideup');
+  drag.content = document.querySelector('#content');
   drag.container = document.querySelector('#wrapper');
   drag.container.addEventListener('touchstart', drag.start, false);
   drag.container.addEventListener('touchend', drag.end, false);

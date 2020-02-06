@@ -17,6 +17,7 @@
 
   --button: #eaecee;
   --button-active: #000;
+  --button-opacity: 1;
 
   --primary: #b20000;
   --contrast: #000;
@@ -36,6 +37,7 @@
 
     --button: #151515;
     --button-active: #eaecee;
+    --button-opacity: 0.95;
 
     --primary: #820000;
     --contrast: #ccc;
@@ -216,6 +218,7 @@ button:hover {
   margin: 0;
   background-color: var(--button-bg);
   color: var(--button-colour);
+  opacity: var(--button-opacity);
 }
 .interaction button:first-of-type {
   border-top-right-radius: 0.3em;
@@ -302,7 +305,10 @@ button:hover {
   height: 95%;
   overflow: hidden;
   width: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
 }
 #slideup.open #content {
+  opacity: 1;
   overflow: auto;
 }
