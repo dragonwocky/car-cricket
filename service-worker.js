@@ -1,15 +1,15 @@
 !(function() {
   'use strict';
-  const ID = 'carcricket-1f564xb3894ede3a46f94d',
-    ROOT = '/car-cricket/',
-    ERROR = 'error.html',
+  const ID = 'carcricket@dragonwocky',
+    ERROR = '/assets/error.html',
     AUTOCACHE = [
-      ROOT,
-      `${ROOT}assets/web-icon.png`,
-      `${ROOT}assets/apple-icon.png`,
-      `${ROOT}assets/scripts.js`,
-      `${ROOT}assets/styles.css`,
-      `${ROOT}index.html`
+      ERROR,
+      '/',
+      '/index.html',
+      '/assets/web-icon.png',
+      '/assets/apple-icon.png',
+      '/assets/scripts.js',
+      '/assets/styles.css'
     ];
 
   self.addEventListener('install', event => {
