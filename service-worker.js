@@ -26,7 +26,7 @@
   //   if (response.status === 200) cache.put(EXTERNAL[i][0], response.clone());
   // }
   //
-  // in 'fetch'
+  // in 'fetch':
   // for (let i = 0; i < EXTERNAL.length; i++)
   //   if (file[0] === new URL(event.request.url).pathname.slice(1)) {
   //     response = await fetch(EXTERNAL[i][1]);
