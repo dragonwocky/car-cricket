@@ -7,55 +7,90 @@
 
 :root {
   --bg: #f9f9f9;
+  --slideup: #fff;
+  --slideup-tab: #ccc;
+
+  --font: 'Open Sans', sans-serif;
+  --font-colour: #111;
+  --title-font: 2em Courier, monospace;
+  --title-weight: 500;
+
+  --button: #eaecee;
+  --button-active: #000;
+  --button-opacity: 1;
+
   --primary: #b20000;
   --contrast: #000;
-  --grey: #818078;
+  --complement: #fff;
   --warn: #d00;
-  --font: 'Open Sans', sans-serif;
-  --button-white: #fff;
-  --button-grey: #bbb;
-  --button-blue: #36c;
-  --button-black: #000;
-  --button-pink: #f69;
-  --button-yellow: #ff0;
-  --button-red: #c00;
+  --grey: #818078;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e;
+    --slideup: #242426;
+    --slideup-tab: #3a3a3c;
+
+    --font-colour: #ddd;
+    --title-weight: 600;
+
+    --button: #151515;
+    --button-active: #eaecee;
+    --button-opacity: 0.95;
+
+    --primary: #820000;
+    --contrast: #ccc;
+    --complement: #2c2c2e;
+    --warn: #e20d00;
+    --grey: #d7dbdd;
+  }
 }
 
 html,
-body {
+body,
+#wrapper {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-}
-
-body {
-  padding: 1em;
-  font-family: var(--font);
   background-color: var(--bg);
 }
-
+#wrapper {
+  padding: 1em;
+  font-family: var(--font);
+  color: var(--font-colour);
+}
 section:not(#slideup) {
-  min-width: 100%;
+  width: 100%;
   min-height: 100%;
+  padding-bottom: 4em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 4em;
+}
+
+.detail {
+  font-size: 0.8em;
+  text-align: center;
+  color: var(--grey);
+}
+.warn {
+  color: var(--warn);
 }
 
 .title {
   width: 100%;
+  margin: 2.7em 0;
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin: 2.7em 0;
 }
 .title h1 {
   text-align: center;
-  font: 2em Courier, monospace;
-  font-weight: 500;
+  font: var(--title-font);
+  font-weight: var(--title-weight);
   margin: calc(0.125em - 2.5px) 0.4em;
   border-bottom: 5px solid var(--primary);
 }
@@ -65,20 +100,11 @@ section:not(#slideup) {
   margin: 0 0.4em;
 }
 
-.detail {
-  font-size: 0.8em;
-  text-align: center;
-  color: var(--grey);
-}
-.detail.warn {
-  color: var(--warn);
+.interaction {
+  width: 25%;
 }
 .interaction .detail {
   text-align: right;
-}
-
-.interaction {
-  width: 25%;
 }
 @media screen and (max-width: 1150px) {
   .interaction {
@@ -110,19 +136,35 @@ label {
   font-style: italic;
   padding-left: 9px;
 }
-
 input[type='text'],
 select {
-  width: 100%;
+  color: var(--font-colour);
+  -webkit-appearance: none;
   font-size: 1em;
   font-family: var(--font);
+  width: 100%;
   padding: 8px;
   margin: 5px 0;
   border: 1px solid var(--contrast);
-  -webkit-appearance: none;
   border-radius: 0;
+  background: var(--complement);
   transition: 50ms;
-  background: #fff;
+}
+select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--grey) 50%),
+    linear-gradient(135deg, var(--grey) 50%, transparent 50%),
+    linear-gradient(to right, var(--grey), var(--grey));
+  background-position: calc(100% - 20px) calc(1em + 1.5px),
+    calc(100% - 15px) calc(1em + 1.5px), calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px calc(1em + 6px);
+  background-repeat: no-repeat;
+}
+select:focus {
+  background-image: linear-gradient(45deg, var(--grey) 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, var(--grey) 50%),
+    linear-gradient(to right, var(--grey), var(--grey));
+  background-position: calc(100% - 15px) calc(1em + 1.5px),
+    calc(100% - 20px) calc(1em + 1.5px), calc(100% - 2.5em) 0.5em;
 }
 input[type='text']::placeholder {
   color: var(--grey);
@@ -151,24 +193,6 @@ input[type='text'].warn:active {
   box-shadow: 0 0 0.2px 0.3px var(--warn);
 }
 
-select {
-  background-image: linear-gradient(45deg, transparent 50%, var(--grey) 50%),
-    linear-gradient(135deg, var(--grey) 50%, transparent 50%),
-    linear-gradient(to right, var(--grey), var(--grey));
-  background-position: calc(100% - 20px) calc(1em + 1.5px),
-    calc(100% - 15px) calc(1em + 1.5px), calc(100% - 2.5em) 0.5em;
-  background-size: 5px 5px, 5px 5px, 1px calc(1em + 6px);
-  background-repeat: no-repeat;
-}
-select:focus {
-  background-image: linear-gradient(45deg, var(--grey) 50%, transparent 50%),
-    linear-gradient(135deg, transparent 50%, var(--grey) 50%),
-    linear-gradient(to right, var(--grey), var(--grey));
-  background-position: calc(100% - 15px) calc(1em + 1.5px),
-    calc(100% - 20px) calc(1em + 1.5px), calc(100% - 2.5em) 0.5em;
-  background-size: 5px 5px, 5px 5px, 1px calc(1em + 6px);
-}
-
 button {
   font: 0.9em var(--font);
   padding: 0.35em 1.2em;
@@ -176,15 +200,15 @@ button {
   border: none;
   border-radius: 0.3em;
   transition: 0.2s;
-  background-color: #eaecee;
+  color: var(--contrast);
+  background-color: var(--button);
   text-transform: uppercase;
 }
 button:hover {
-  color: #fff;
-  background-color: #000;
+  color: var(--complement);
+  background-color: var(--button-active);
   cursor: pointer;
 }
-
 .interaction button {
   width: 100%;
   padding: 5px;
@@ -192,6 +216,9 @@ button:hover {
   font-weight: bold;
   border-radius: 0;
   margin: 0;
+  background-color: var(--button-bg);
+  color: var(--button-colour);
+  opacity: var(--button-opacity);
 }
 .interaction button:first-of-type {
   border-top-right-radius: 0.3em;
@@ -201,140 +228,87 @@ button:hover {
   border-bottom-right-radius: 0.3em;
   border-bottom-left-radius: 0.3em;
 }
-
-@keyframes white {
- 0%, 90% {
-   color: var(--button-white);
- }
- 100% {
-   color: #000;
- }
+.interaction button:active {
+  color: var(--button-bg);
 }
-
+@media (hover: hover) and (pointer: fine) {
+  .interaction button:hover {
+    color: var(--button-bg);
+  }
+}
 .white {
-  background-color: var(--button-white);
-}
-.white:hover {
-  animation: white 1s forwards;
-  color: #000;
-  background-color: var(--button-white);
+  --button-bg: #fff;
+  --button-colour: #000;
 }
 .grey {
-  background-color: var(--button-grey);
-}
-.grey:hover {
-  color: var(--button-grey);
-  background-color: var(--button-grey);
+  --button-bg: #bbb;
+  --button-colour: #000;
 }
 .blue {
-  color: #fff;
-  background-color: var(--button-blue);
-}
-.blue:hover {
-  color: var(--button-blue);
-  background-color: var(--button-blue);
+  --button-bg: #36c;
+  --button-colour: #fff;
 }
 .black {
-  color: #fff;
-  background-color: var(--button-black);
-}
-.black:hover {
-  color: var(--button-black);
-  background-color: var(--button-black);
+  --button-bg: #000;
+  --button-colour: #fff;
 }
 .pink {
-  color: #fff;
-  background-color: var(--button-pink);
-}
-.pink:hover {
-  color: var(--button-pink);
-  background-color: var(--button-pink);
+  --button-bg: #f69;
+  --button-colour: #fff;
 }
 .yellow {
-  background-color: var(--button-yellow);
-}
-.yellow:hover {
-  color: var(--button-yellow);
-  background-color: var(--button-yellow);
+  --button-bg: #ff0;
+  --button-colour: #000;
 }
 .red {
-  color: #fff;
-  background-color: var(--button-red);
-}
-.red:hover {
-  color: var(--button-red);
-  background-color: var(--button-red);
+  --button-bg: #c00;
+  --button-colour: #fff;
 }
 
 #slideup {
-  background-color: #fff;
   width: calc(100% - 2em);
   max-height: 1.5em;
   position: fixed;
-  bottom: 0;
   left: 1em;
   right: 1em;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--slideup);
   border-top-right-radius: 0.6em;
   border-top-left-radius: 0.6em;
   transition: 0.4s;
-  display: flex;
-  flex-direction: column;
 }
-
 #slideup.open {
-  padding-bottom: 1.5em;
   max-height: 97.5%;
+  padding-bottom: 1.5em;
 }
-
 #slideup #drag {
-  padding: 0;
-  padding-top: 1.5em;
+  padding: 1.5em 0 0 0;
 }
-
-#slideup > #drag span#tag {
-  background-color: #ccc;
+#slideup #drag #tab {
+  background-color: var(--slideup-tab);
   height: 0.4em;
   width: 3em;
   padding: 0.2em 1.5em;
   position: absolute;
-  top: calc(0.75em - 0.2em);
+  top: 0.55em;
   left: calc(50% - 1.5em);
   border-radius: 0.3em;
   transition: 0.3s;
 }
-
-#slideup.open > #drag span#tag {
- top: 0.75em;
+#slideup.open #drag #tab {
+  top: 0.75em;
 }
-
-#slideup > div.padded {
+#slideup #content {
   padding: 0 1em;
   height: 95%;
+  overflow: hidden;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+}
+#slideup.open #content {
+  opacity: 1;
   overflow: auto;
-}
-
-#slideup div {
-  width: 100%;
-}
-
-.padded > p {
-  margin: 0;
-}
-.padded .action {
-  width: 100%;
-}
-
-.sidebyside {
-  display: flex;
-  justify-content: space-around;
-}
-.sidebyside > * {
-  margin: 2.5px;
-}
-.sidebyside :first-child {
-  flex-grow: 1;
-}
-.sidebyside button {
-  text-align: center;
-  font-size: 0.8em;
 }

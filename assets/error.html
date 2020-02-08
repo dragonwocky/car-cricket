@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>error</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        outline: none;
+      }
+      :root {
+        --bg: #f9f9f9;
+        --title: #b20000;
+        --text: #111;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --text: #ddd;
+        }
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+      }
+      body {
+        height: 92.5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      h1 {
+        color: var(--title);
+        text-shadow: 2px 2px #000;
+      }
+      h2 {
+        max-width: 70%;
+        color: var(--text);
+        text-shadow: 3px 3px #000;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>error - page not found</h1>
+    <h2>
+      if you're offline, try reloading when you have a network connection to update the
+      cache.
+    </h2>
+  </body>
+</html>
