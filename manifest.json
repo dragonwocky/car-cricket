@@ -1,14 +1,14 @@
 {
-  "background_color": "#f7f9f9",
   "theme_color": "#b20000",
   "name": "Car Cricket",
   "short_name": "Car Cricket",
   "display": "standalone",
-  "start_url": "/car-cricket/index.html",
+  "start_url": ".",
+  "scope": ".",
   "icons": [
     {
       "src": "assets/apple-icon.png",
-      "sizes": "250x250",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ]

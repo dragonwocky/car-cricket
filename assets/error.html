@@ -10,15 +10,17 @@
         outline: none;
       }
       :root {
-        --bg: #f8f9f9;
-        --text: #a6acaf;
+        --bg: #f9f9f9;
+        --title: #b20000;
+        --text: #111;
       }
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #060606;
-          --text: #808b96;
+          --bg: #1c1c1e;
+          --text: #ddd;
         }
       }
+
       html,
       body {
         width: 100%;
@@ -37,19 +39,21 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
       h1 {
-        color: #900;
+        color: var(--title);
+        text-shadow: 2px 2px #000;
       }
       h2 {
         max-width: 70%;
         color: var(--text);
+        text-shadow: 3px 3px #000;
       }
     </style>
   </head>
   <body>
-    <h1>page not found.</h1>
+    <h1>error - page not found</h1>
     <h2>
-      if you're offline, this page might just not have been cached yet. otherwise, this
-      page doesn't exist.
+      if you're offline, try reloading when you have a network connection to update the
+      cache.
     </h2>
   </body>
 </html>
